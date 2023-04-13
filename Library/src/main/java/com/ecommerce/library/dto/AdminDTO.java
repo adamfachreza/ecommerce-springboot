@@ -13,8 +13,8 @@ public class AdminDTO {
   @Size(min = 3, max = 10, message = "Invalid last name!(3-10 characters)")
   private String lastName;
 
-  private String username;
-  @Size(min = 3, max = 10, message = "Invalid password!(3-10 characters)")
+  private String userName;
+  @Size(min = 5, max = 16, message = "Invalid password!(3-10 characters)")
   private String password;
 
   private String repeatPassword;

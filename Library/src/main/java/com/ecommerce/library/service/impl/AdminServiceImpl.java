@@ -7,12 +7,13 @@ import com.ecommerce.library.repository.RoleRepository;
 import com.ecommerce.library.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-
+@Service
 public class AdminServiceImpl implements AdminService {
 
-  private BCryptPasswordEncoder passwordEncoder;
+
   @Autowired
   private AdminRepository adminRepository;
 
@@ -29,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
     admin.setFirstName(adminDTO.getFirstName());
     admin.setLastName(adminDTO.getLastName());
     admin.setUserName(admin.getUserName());
-    admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
+    admin.setPassword(adminDTO.getPassword());
     admin.setRoles(Arrays.asList(roleRepository.findByName("ADMIN")));
     return adminRepository.save(admin);
   }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.SQLException;
 import java.util.Collection;
 
 @Entity
@@ -21,11 +22,11 @@ public class Admin {
   private String userName;
   private String password;
 
-  @Lob
-  @Column(columnDefinition = "bytea")
-  private byte[] image;
+  @Column(name = "image_oid")
+  private Long imageOid;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @JoinTable(name = "admin_roles", joinColumns = @JoinColumn(name = "admin_id", referencedColumnName = "admin_id"),inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "role_id"))
   private Collection<Role> roles;
+
 }
