@@ -23,19 +23,22 @@ public class LoginController {
 @Autowired
   private AdminServiceImpl adminService;
   @GetMapping("/login")
-  public String loginForm(){
+  public String loginForm(Model model){
+    model.addAttribute("title","Login Admin");
     return "login";
   }
 
   @GetMapping("/register")
   public String register(Model model,HttpSession session){
     session.removeAttribute("message");
+    model.addAttribute("title","Register");
     model.addAttribute("adminDTO", new AdminDTO());
     return "register";
   }
 
   @GetMapping("/forgot-password")
   public String forgotPassword(Model model){
+    model.addAttribute("title","Forgot Password");
     return "forgot-password";
   }
 
