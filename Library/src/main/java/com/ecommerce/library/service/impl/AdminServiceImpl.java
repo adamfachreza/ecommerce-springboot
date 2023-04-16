@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
     Admin admin = new Admin();
     admin.setFirstName(adminDTO.getFirstName());
     admin.setLastName(adminDTO.getLastName());
-    admin.setUserName(admin.getUserName());
+    admin.setUserName(adminDTO.getUserName());
     admin.setPassword(adminDTO.getPassword());
     admin.setRoles(Arrays.asList(roleRepository.findByName("ADMIN")));
     return adminRepository.save(admin);

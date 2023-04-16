@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -37,11 +39,15 @@ public class LoginController {
     return "forgot-password";
   }
 
+  @RequestMapping("/index")
+  public String home(){
+    return"index";
+  }
+
   @PostMapping("/register-new")
   public String addNewAdmin(@Valid @ModelAttribute("adminDTO")AdminDTO adminDTO,
                             BindingResult result,
-                            Model model,
-                            HttpSession session){
+                            Model model){
     try{
       if(result.hasErrors()){
         model.addAttribute("adminDTO", adminDTO);
@@ -53,24 +59,24 @@ public class LoginController {
       if(admin != null){
         model.addAttribute("adminDTO", adminDTO);
         System.out.println("admin not null");
-        session.setAttribute("message","Your email has been registered");
+        model.addAttribute("emailError","You email has been registered!");
         return "register";
       }
       if(adminDTO.getPassword().equals(adminDTO.getRepeatPassword())){
         adminDTO.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
         adminService.save(adminDTO);
         System.out.println("success");
-        session.setAttribute("message","Register successfully");
+        model.addAttribute("success","Register successfully");
         model.addAttribute("adminDTO",adminDTO);
       }else{
         model.addAttribute("adminDTO", adminDTO);
-        session.setAttribute("message","Password is not same!");
+        model.addAttribute("passwordError","Your password maybe wrong! check again!");
         System.out.println("password not same");
         return "register";
       }
     }catch (Exception e){
       e.printStackTrace();
-      session.setAttribute("message","Can not register because error server!");
+      model.addAttribute("errors","The server has been wrong!");
     }
     return "register";
   }
